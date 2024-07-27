@@ -7,6 +7,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.flotares.tournaments.exception.ServiceException;
 import org.flotares.tournaments.model.Phase;
 import org.flotares.tournaments.model.PhaseType;
 import org.flotares.tournaments.model.Tournament;
@@ -41,7 +42,7 @@ public class PhaseResource {
         Optional<Tournament> tournament = tournamentService.getById(id);
 
         if (tournament.isEmpty()) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            throw new ServiceException(Response.Status.NOT_FOUND, "Tournament not found");
         }
 
         return Response.ok(phaseService.getAllForTournament(tournament.get(), name, phaseType, phaseOrder)).build();
@@ -54,7 +55,7 @@ public class PhaseResource {
         Optional<Tournament> tournament = tournamentService.getById(id);
 
         if (tournament.isEmpty()) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            throw new ServiceException(Response.Status.NOT_FOUND, "Tournament not found");
         }
 
         p.setTournament(tournament.get());
@@ -71,9 +72,29 @@ public class PhaseResource {
         Optional<Phase> phase = phaseService.getById(id);
 
         if (phase.isEmpty()) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            throw new ServiceException(Response.Status.NOT_FOUND, "Phase not found");
         }
         phaseService.delete(phase.get());
+
+        return Response.ok().build();
+    }
+
+    @GET
+    @Path("{id}/addTeamsToGroups")
+    public Response addTeamsToGroups(@PathParam("id") long id){
+        LOGGER.info(String.format("addTeamsToGroups{%d}", id));
+
+        Optional<Tournament> tournament = tournamentService.getById(id);
+
+        if (tournament.isEmpty()) {
+            throw new ServiceException(Response.Status.NOT_FOUND, "Tournament not found");
+        }
+
+        Optional<Phase> phase = phaseService.getById(id);
+
+        if (phase.isEmpty()) {
+            throw new ServiceException(Response.Status.NOT_FOUND, "Phase not found");
+        }
 
         return Response.ok().build();
     }

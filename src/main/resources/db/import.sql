@@ -6,26 +6,44 @@ insert into Tournament(name, start_date, status) values
 insert into Phase(phase_type, name, phase_order, tournament_id) values
 (0, 'Vorrunde', 0, 1),
 (0, 'Zwischenrunde', 1, 1),
-(1, 'Kreuzspiele', 2, 1),
-(1, 'Finalspiele', 3, 1);
+(2, 'Kreuzspiele', 2, 1),
+(2, 'Finalspiele', 3, 1);
+
+insert into Pot(tournament_id, name) values
+(1, 'Pot 1'),
+(1, 'Pot 2'),
+(1, 'Pot 3'),
+(1, 'Pot 4');
 
 insert into Club (name) values
-('SC St. Valentin'),
-('Floridsdorfer AC'),
+('FAC Wien'),
 ('SK Admira Linz'),
 ('ASKÖ Luftenberg'),
 ('SK Asten'),
-('LASK');
-
-insert into Team(name, club_id) values
-('SC St. Valentin I', 1),
-('SC St. Valentin II', 1),
-('Floridsdorfer AC', 2),
-('SK Admira Linz', 3);
-
-insert into Tournament_Team(tournament_id, teams_id) values
-(1, 1),
-(1, 2),
-(1, 3),
-(1, 4);
-
+('LASK'),
+('Union St. Florian'),
+('USC Perchtoldsdorf'),
+('SV Lostenstein'),
+('Red Bull Salzburg'),
+('FC Stahl Linz'),
+('SC Columbia Floridsdorf'),
+('Union Dietach'),
+('SG Waidhofen/Ybbs'),
+('JARR Graz Umgebung Süd'),
+('ASKÖ Ebelsberg'),
+('ASK St. Valentin'),
+('WSC Hertha'),
+('USC Markersdorf'),
+('Union Puchenau'),
+('ASV Haidershofen/Behamberg'),
+('Austria Salzburg'),
+('ASKÖ Donau Linz'),
+('Union Wolfern'),
+('SKN St. Pölten'),
+('SPG Hörsching/Oedt'),
+('SC St. Pantaleon-Erla'),
+('SV Sierning'),
+('FC Fleyeralarm Admira'),
+('SV Wienerberg 1921'),
+('SC St. Valentin'),
+('Union Weißkirchen');

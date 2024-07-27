@@ -1,15 +1,16 @@
 package org.flotares.tournaments.model;
 
+
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
-public class Club {
+public class Badge {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String name;
-    @OneToOne
-    private Badge badge;
+    @Lob
+    @Column(length = 5_000_000)
+    private byte[] data;
 }

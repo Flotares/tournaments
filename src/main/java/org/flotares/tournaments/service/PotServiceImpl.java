@@ -26,17 +26,20 @@ public class PotServiceImpl implements PotService {
     }
 
     @Override
-    public Team addTeamToPot(Pot pot, Team team) {
-        team.setPot(pot);
-        Team rt = teamService.update(team.getId(), team);
-        return rt;
+    public Pot addTeamToPot(Pot pot, Team team) {
+        pot.addTeam(team);
+        Panache.getEntityManager().merge(pot);
+        Panache.getEntityManager().merge(team);
+        return pot;
     }
 
     @Override
-    public Team removeTeamFromPot(Team team) {
+    public Pot removeTeamFromPot(Pot pot, Team team) {
+        pot.removeTeam(team);
         team.setPot(null);
-        Team rt = teamService.update(team.getId(), team);
-        return rt;
+        Panache.getEntityManager().merge(pot);
+        Panache.getEntityManager().merge(team);
+        return pot;
     }
 
     @Override

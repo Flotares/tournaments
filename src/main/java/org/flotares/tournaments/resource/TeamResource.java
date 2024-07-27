@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 @Produces(MediaType.APPLICATION_JSON)
 @Transactional
 @Tag(name = "Team Resource", description = "Endpoint for teams")
-public class TeamsResource {
+public class TeamResource {
     @Inject
     TeamService teamService;
     @Inject
@@ -27,7 +27,7 @@ public class TeamsResource {
     @PathParam("id")
     private long id;
 
-    private static final Logger LOGGER = Logger.getLogger(TeamsResource.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(TeamResource.class.getName());
 
     @GET
     public Response getAllTeams(){

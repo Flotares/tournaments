@@ -1,6 +1,5 @@
 package org.flotares.tournaments.resource;
 
-import com.mysql.cj.log.Log;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
@@ -17,13 +16,13 @@ import org.flotares.tournaments.service.TournamentService;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-@Path("tournaments/{id}/pots")
+@Path("tournaments/{tId}/pots")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Transactional
 @Tag(name = "Pot Resource", description = "Endpoint for pots")
 public class PotResource {
-    @PathParam("id")
+    @PathParam("tId")
     private long tId;
 
     @Inject
@@ -64,8 +63,8 @@ public class PotResource {
     }
 
     @POST
-    @Path("{id}/addTeam")
-    public Response addTeamToPot(@PathParam("id") long pId, Team team){
+    @Path("{pId}/addTeam")
+    public Response addTeamToPot(@PathParam("pId") long pId, Team team){
         LOGGER.info(String.format("addTeamToPot{%s}", team.toString()));
 
         Optional<Tournament> tournament = tournamentService.getById(tId);
@@ -84,15 +83,21 @@ public class PotResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        Team rt = potService.addTeamToPot(pot.get(), team);
+        Optional<Team> t = teamService.getById(team.getId());
 
-        return Response.ok(rt).build();
+        if(t.get().getPot() != null){
+            return Response.status(Response.Status.CONFLICT).build();
+        }
+
+        Pot rp = potService.addTeamToPot(pot.get(), team);
+
+        return Response.ok(rp).build();
     }
 
     @POST
-    @Path("{id}/removeTeam")
-    public Response removeTeamFromPot(@PathParam("id") long pId, Team team){
-        LOGGER.info(String.format("addTeamToPot{%s}", team.toString()));
+    @Path("{pId}/removeTeam")
+    public Response removeTeamFromPot(@PathParam("pId") long pId, Team team){
+        LOGGER.info(String.format("removeTeamToPot{%s}", team.toString()));
 
         Optional<Tournament> tournament = tournamentService.getById(tId);
 
@@ -110,8 +115,8 @@ public class PotResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        Team rt = potService.removeTeamFromPot(team);
+        Pot rp = potService.removeTeamFromPot(pot.get(), team);
 
-        return Response.ok(rt).build();
+        return Response.ok(rp).build();
     }
 }

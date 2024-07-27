@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface PotService extends CrudService<Pot> {
     List<Pot> getAllForTournament(Tournament t);
-    Team addTeamToPot(Pot pot, Team team);
-    Team removeTeamFromPot(Team team);
+    Pot addTeamToPot(Pot pot, Team team);
+    Pot removeTeamFromPot(Pot pot, Team team);
 }
